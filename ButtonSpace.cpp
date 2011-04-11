@@ -65,7 +65,7 @@ boolean ButtonSpace::update(int* num_events, const uint8_t** buffer)
     while (i--)
         if (buttons[i].fallingEdge())
         {
-            printf("Message #%i = %i\n\r",*num_events,pins[i]);
+            //printf("Message #%i = %i\n\r",*num_events,pins[i]);
             *current_message++ = pins[i];
             (*num_events)++;
             result = true;
