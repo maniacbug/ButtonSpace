@@ -44,7 +44,7 @@ public:
      * @param[out] num_keys Pointer to space for the number of keys that
      * were pressed this cycle.  Ok to pass NULL if you don't care.
      * @param[out] buffer Pointer to space for the buffer.  This returns
-     * a pointed to the internal message buffer.  It is valid until the
+     * a pointer to the internal message buffer.  It is valid until the
      * next call to this method.  Ok to pass NULL if you don't care.
      * @return True if there are events to be processed
      */
