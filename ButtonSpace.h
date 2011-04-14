@@ -59,6 +59,11 @@ public:
     void flush(void);
 
     /**
+     * Blocks until at least one key is pressed 
+     */
+    void press_any_key(void);
+
+    /**
      * Updates the state of buttons
      *
      * As with Bounce.update(), call this regularly in the main loop

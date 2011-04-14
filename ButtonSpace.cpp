@@ -113,6 +113,12 @@ void ButtonSpace::flush(void)
     num_keydowns_available = 0;
 }
 
+void ButtonSpace::press_any_key(void)
+{
+    while ( ! available() );
+    flush();
+}
+
 Bounce* ButtonSpace::button(uint8_t which) const
 {
     //printf("Seeking name %i\n\r",which);
