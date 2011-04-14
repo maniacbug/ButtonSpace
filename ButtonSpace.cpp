@@ -10,7 +10,7 @@ inline void* operator new(size_t, void* __p)
 }
 
 ButtonSpace::ButtonSpace(int _num_buttons, const uint8_t* _pins):
-    num_buttons(_num_buttons), pins(_pins)
+    num_buttons(_num_buttons), pins(_pins), num_keydowns_available(0)
 {
     buttons = (Bounce*)malloc( num_buttons * sizeof(Bounce) );
 
@@ -75,6 +75,42 @@ boolean ButtonSpace::update(int* num_events, const uint8_t** buffer)
         }
 
     return result;
+}
+
+boolean ButtonSpace::available(void)
+{
+    boolean result = false;
+
+    if ( num_keydowns_available )
+	result = true;
+
+    // Warning, do not call update() to get more keydowns until
+    // all of the current ones have been returned to the user
+    else if ( update(&num_keydowns_available,NULL) )
+    {
+	result = true;
+	current_read = message_buffer;
+    }
+
+    return result;
+}
+
+uint8_t ButtonSpace::read(void)
+{
+    uint8_t result = 0;
+
+    if ( num_keydowns_available )
+    {
+	--num_keydowns_available;
+	result = *current_read++;
+    }
+
+    return result;
+}
+
+void ButtonSpace::flush(void)
+{
+    num_keydowns_available = 0;
 }
 
 Bounce* ButtonSpace::button(uint8_t which) const

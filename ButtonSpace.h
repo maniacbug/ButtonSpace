@@ -9,6 +9,8 @@ private:
     int num_buttons;
     const uint8_t* pins;
     uint8_t* message_buffer;
+    uint8_t* current_read;
+    int num_keydowns_available;
 
 public:
     /**
@@ -28,6 +30,33 @@ public:
      * Sets them all to inputs, engages pull-up resistors
      */
     void begin(void);
+
+    /**
+     * Whether there are button presses available in the queue
+     *
+     * This is part of the new high-level interface to the button
+     * board.  Calling this function will update the buttons and
+     * queue up the keydowns into a buffer, and return whether
+     * there are any keydowns left to process.
+     *
+     * @todo Create an example for the high-level interface
+     *
+     * @return whether there are keydowns to be read
+     */
+    boolean available(void);
+
+    /**
+     * Read a single button press from the keydown queue
+     *
+     * @return the pin# of a button that was pressed
+     * recently
+     */
+    uint8_t read(void);
+
+    /**
+     * Clear the pending keydowns
+     */
+    void flush(void);
 
     /**
      * Updates the state of buttons
