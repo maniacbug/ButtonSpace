@@ -54,8 +54,10 @@ void ButtonSpace::update(void)
 boolean ButtonSpace::update(int* num_events, const uint8_t** buffer)
 {
     boolean result = false;
-    *num_events = 0;
-    *buffer = message_buffer;
+    if (num_events)
+	*num_events = 0;
+    if (buffer)
+	*buffer = message_buffer;
     uint8_t* current_message = message_buffer;
     memset(message_buffer,0,num_buttons);
 
@@ -67,7 +69,8 @@ boolean ButtonSpace::update(int* num_events, const uint8_t** buffer)
         {
             //printf("Message #%i = %i\n\r",*num_events,pins[i]);
             *current_message++ = pins[i];
-            (*num_events)++;
+            if (num_events)
+		(*num_events)++;
             result = true;
         }
 
